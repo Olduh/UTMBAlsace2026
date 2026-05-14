@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadbook — Trail Alsace 2026 / Ghilain BEAUPLET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --bg-panel: #131316;
+  --bg-elev: #1a1a1f;
+  --bg-card: #161619;
+  --border: #2a2a30;
+  --border-soft: #1f1f24;
+  --text: #f5f5f7;
+  --text-dim: #a1a1aa;
+  --text-mute: #6b6b75;
+  --accent: #ff1f7a;
+  --accent-dim: #ff1f7a33;
+  --accent-glow: #ff1f7a1a;
+  --warn: #ffb020;
+  --warn-bg: #ffb02015;
+  --ok: #34d399;
+  --ok-bg: #34d39915;
+  --night: #6b8cff;
+  --night-bg: #6b8cff15;
+  --day: #fbbf24;
+  --day-bg: #fbbf2415;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 31, 122, 0.08), transparent),
+    linear-gradient(180deg, var(--bg) 0%, #0c0c0f 100%);
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* === HEADER === */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 96;
+}
+
+.header h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.header .subtitle {
+  font-family: 'JetBrains Mono';
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  margin-top: 12px;
+}
+
+.header-meta {
+  text-align: right;
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-mute);
+}
+
+.header-meta strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* === DAY TABS === */
+.day-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding: 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.day-tab {
+  flex: 1;
+  min-width: 160px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono';
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.day-tab:hover { color: var(--text); background: var(--bg-elev); }
+
+.day-tab.active {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.day-tab .day-date {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.7;
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+/* === STATS BAR === */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.stat {
+  background: var(--bg-panel);
+  padding: 16px 20px;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono';
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.stat-value.accent { color: var(--accent); }
+
+/* === TIMELINE === */
+.timeline-section { margin-bottom: 48px; display: none; }
+.timeline-section.active { display: block; }
+
+.day-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.day-header h2 {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.day-header .day-tag {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* === MISSION CARDS === */
+.mission {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.mission:hover { border-color: var(--accent-dim); }
+
+.mission-header {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 22px;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--bg-card), transparent);
+  user-select: none;
+}
+
+.mission-num {
+  font-family: 'JetBrains Mono';
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.mission-title-wrap h3 {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.mission-meta {
+  font-family: 'JetBrains Mono';
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mission-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+.badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono';
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.badge.role-verif { color: var(--day); background: var(--day-bg); border-color: var(--day); }
+.badge.role-ferm { color: var(--night); background: var(--night-bg); border-color: var(--night); }
+.badge.role-pc { color: var(--accent); background: var(--accent-glow); border-color: var(--accent); }
+.badge.tod-day { color: var(--day); background: var(--day-bg); border-color: transparent; }
+.badge.tod-night { color: var(--night); background: var(--night-bg); border-color: transparent; }
+
+.mission-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chevron {
+  width: 24px; height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-mute);
+  transition: transform 0.3s, color 0.2s;
+}
+
+.mission.expanded .chevron { transform: rotate(180deg); color: var(--accent); }
+
+.mission-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.mission.expanded .mission-body { max-height: 4000px; }
+
+.mission-body-inner {
+  padding: 0 22px 24px 22px;
+  border-top: 1px solid var(--border-soft);
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.info-block h4 {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.info-block ul {
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.info-block li {
+  padding: 4px 0;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.info-block li .key {
+  font-family: 'JetBrains Mono';
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.info-block li .val {
+  color: var(--text);
+}
+
+.info-block a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--accent-dim);
+  transition: border-color 0.2s;
+  font-family: 'JetBrains Mono';
+  font-size: 0.8rem;
+}
+
+.info-block a:hover { border-bottom-color: var(--accent); }
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: 'JetBrains Mono';
+  font-size: 0.8rem;
+}
+
+.contact-chip .name { color: var(--text); }
+.contact-chip .phone { color: var(--text-dim); }
+
+/* === LOGISTICS BLOCK === */
+.logistics {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-top: 16px;
+}
+
+.logistics-title {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.logistics-steps {
+  list-style: none;
+  counter-reset: step;
+}
+
+.logistics-steps li {
+  counter-increment: step;
+  padding: 8px 0 8px 36px;
+  position: relative;
+  font-size: 0.88rem;
+  border-bottom: 1px dashed var(--border-soft);
+}
+
+.logistics-steps li:last-child { border-bottom: none; }
+
+.logistics-steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 8px;
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.logistics-steps li .time {
+  font-family: 'JetBrains Mono';
+  font-weight: 600;
+  color: var(--text);
+  margin-right: 10px;
+}
+
+/* === ALERTS === */
+.alert {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+  font-size: 0.88rem;
+  border: 1px solid;
+}
+
+.alert-warn {
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--text);
+}
+
+.alert-warn .alert-icon { color: var(--warn); }
+
+.alert-info {
+  background: var(--accent-glow);
+  border-color: var(--accent-dim);
+  color: var(--text);
+}
+
+.alert-info .alert-icon { color: var(--accent); }
+
+.alert-icon {
+  font-family: 'JetBrains Mono';
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border: 1px solid;
+  border-radius: 3px;
+  height: fit-content;
+  letter-spacing: 0.1em;
+}
+
+.alert-content strong { color: var(--text); font-weight: 600; }
+.alert-content { color: var(--text-dim); line-height: 1.55; }
+.alert-content p + p { margin-top: 6px; }
+
+/* === CHECKLIST === */
+.checklist {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checklist input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--text-mute);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.checklist input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checklist input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.checklist input[type="checkbox"]:checked + label { color: var(--text-mute); text-decoration: line-through; }
+
+.checklist label { cursor: pointer; line-height: 1.5; }
+
+/* === GLOBAL SECTIONS === */
+.global-section {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.section-title {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .mono {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.todo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.todo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.todo-card.urgent { border-color: var(--warn); }
+.todo-card.urgent .todo-tag { color: var(--warn); }
+
+.todo-tag {
+  font-family: 'JetBrains Mono';
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.todo-card h4 {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.todo-card p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* === CONTACTS CARD === */
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.contact {
+  background: var(--bg-card);
+  padding: 14px 18px;
+}
+
+.contact-role {
+  font-family: 'JetBrains Mono';
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 4px;
+}
+
+.contact-name {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.contact-phone {
+  font-family: 'JetBrains Mono';
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+/* === FOOTER === */
+.footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer .accent { color: var(--accent); }
+
+/* === CONTINUUM TIMELINE (échelle proportionnelle) === */
+.continuum-wrap {
+  position: relative;
+}
+
+.continuum-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.continuum-legend .item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.continuum-legend .swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.swatch.sw-mission { background: var(--accent); }
+.swatch.sw-travel { background: var(--bg-elev); border: 1px solid var(--border); }
+.swatch.sw-rest { background: var(--ok-bg); border: 1px solid var(--ok); }
+.swatch.sw-blocker { background: var(--warn); }
+.swatch.sw-night { background: var(--night-bg); border: 1px solid var(--night); }
+
+/* Conteneur timeline proportionnelle */
+.tl-scale {
+  --hour-h: 80px;            /* hauteur d'une heure */
+  --rail-w: 84px;            /* largeur colonne horaire à gauche */
+  --pad-r: 0px;
+  position: relative;
+  padding-left: var(--rail-w);
+  padding-right: var(--pad-r);
+}
+
+.tl-day-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(180deg, transparent 0%, var(--bg-panel) 50%, transparent 100%);
+  border-top: 1px solid var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 calc(var(--rail-w) + 12px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tl-day-divider .label {
+  font-family: 'JetBrains Mono';
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.tl-day-divider .label::before {
+  content: '◆';
+  margin-right: 8px;
+  color: var(--accent);
+}
+
+/* Heures (axe gauche) */
+.tl-hour {
+  position: absolute;
+  left: 0;
+  width: var(--rail-w);
+  height: var(--hour-h);
+  border-top: 1px dashed var(--border-soft);
+  padding: 4px 12px 0 0;
+  text-align: right;
+  font-family: 'JetBrains Mono';
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+.tl-hour.even {
+  border-top-style: solid;
+  border-top-color: var(--border);
+  color: var(--text-dim);
+}
+
+.tl-hour.major {
+  border-top-color: var(--accent-dim);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Ligne horizontale qui traverse toute la timeline (extension visuelle) */
+.tl-hour::after {
+  content: '';
+  position: absolute;
+  left: var(--rail-w);
+  right: -16px;
+  top: -1px;
+  height: 1px;
+  background: var(--border-soft);
+  pointer-events: none;
+}
+
+.tl-hour.even::after { background: var(--border); }
+.tl-hour.major::after { background: var(--accent-dim); }
+
+/* Bandeau nuit en arrière-plan */
+.tl-night-band {
+  position: absolute;
+  left: var(--rail-w);
+  right: 0;
+  background: var(--night-bg);
+  border-left: 2px solid var(--night);
+  border-radius: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tl-night-band .lbl {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-family: 'JetBrains Mono';
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--night);
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* Événements positionnés en absolu */
+.tl-event {
+  position: absolute;
+  left: calc(var(--rail-w) + 8px);
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.tl-event .bar {
+  width: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.tl-event .content {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 12px;
+  overflow: hidden;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tl-event .e-title {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.tl-event .e-title .e-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono';
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 8px;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.tl-event .e-sub {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  margin-top: 2px;
+  letter-spacing: 0.03em;
+}
+
+.tl-event .e-times {
+  font-family: 'JetBrains Mono';
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* Variantes événements */
+.tl-event.ev-mission .bar { background: var(--accent); }
+.tl-event.ev-mission .content { border-color: var(--accent-dim); background: linear-gradient(90deg, var(--accent-glow) 0%, var(--bg-card) 30%); }
+.tl-event.ev-mission .e-title { font-weight: 700; font-size: 0.95rem; }
+.tl-event.ev-mission .e-tag { background: var(--accent); color: var(--bg); }
+
+.tl-event.ev-mission.role-verif .bar { background: var(--day); }
+.tl-event.ev-mission.role-verif .content { border-color: var(--day); background: linear-gradient(90deg, var(--day-bg) 0%, var(--bg-card) 30%); }
+.tl-event.ev-mission.role-verif .e-tag { background: var(--day); color: var(--bg); }
+
+.tl-event.ev-mission.role-ferm .bar { background: var(--night); }
+.tl-event.ev-mission.role-ferm .content { border-color: var(--night); background: linear-gradient(90deg, var(--night-bg) 0%, var(--bg-card) 30%); }
+.tl-event.ev-mission.role-ferm .e-tag { background: var(--night); color: var(--bg); }
+
+.tl-event.ev-mission.role-pc .bar { background: var(--accent); }
+
+.tl-event.ev-travel .bar { background: var(--text-mute); opacity: 0.5; }
+.tl-event.ev-travel .content { background: var(--bg-panel); border-style: dashed; }
+.tl-event.ev-travel .e-title { font-weight: 400; color: var(--text-dim); font-size: 0.82rem; }
+.tl-event.ev-travel .e-tag { background: var(--bg-elev); color: var(--text-dim); border: 1px solid var(--border); }
+
+.tl-event.ev-rest .bar { background: var(--ok); }
+.tl-event.ev-rest .content { background: var(--ok-bg); border-color: var(--ok); border-style: solid; }
+.tl-event.ev-rest .e-tag { background: var(--ok); color: var(--bg); }
+.tl-event.ev-rest .e-title { color: var(--text); }
+
+.tl-event.ev-blocker .bar { background: var(--warn); }
+.tl-event.ev-blocker .content { background: var(--warn-bg); border-color: var(--warn); }
+.tl-event.ev-blocker .e-tag { background: var(--warn); color: var(--bg); }
+
+/* Événements courts (<30 min) : compact, une seule ligne */
+.tl-event.short .content { padding: 4px 10px; }
+.tl-event.short .e-title { font-size: 0.78rem; }
+.tl-event.short .e-title .e-tag { font-size: 0.55rem; padding: 1px 5px; }
+.tl-event.short .e-sub { display: none; }
+.tl-event.short .e-times { font-size: 0.65rem; }
+
+/* Marqueur ponctuel (sans durée) */
+.tl-marker {
+  position: absolute;
+  left: calc(var(--rail-w) + 8px);
+  right: 4px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 24px;
+  margin-top: -12px;
+  pointer-events: none;
+}
+
+.tl-marker .pin {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+  flex-shrink: 0;
+}
+
+.tl-marker.m-blocker .pin { background: var(--warn); box-shadow: 0 0 0 3px var(--warn-bg); }
+
+.tl-marker .lbl {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  color: var(--text);
+  background: var(--bg);
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.tl-marker.m-blocker .lbl { color: var(--warn); border-color: var(--warn); }
+
+/* Récap durées en bas */
+.continuum-totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+.continuum-totals .cell {
+  background: var(--bg-panel);
+  padding: 12px 16px;
+}
+
+.continuum-totals .cell .l {
+  font-family: 'JetBrains Mono';
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 4px;
+}
+
+.continuum-totals .cell .v {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.continuum-totals .cell .v.accent { color: var(--accent); }
+.continuum-totals .cell .v.night-c { color: var(--night); }
+.continuum-totals .cell .v.day-c { color: var(--day); }
+.continuum-totals .cell .v.rest-c { color: var(--ok); }
+.continuum-totals .cell .v.warn-c { color: var(--warn); }
+
+
+/* === MÉTÉO === */
+.meteo-strip {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-top: 16px;
+}
+
+.meteo-strip-title {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meteo-strip-title .ressenti {
+  font-family: 'JetBrains Mono';
+  font-size: 0.6rem;
+  background: var(--bg);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--accent-dim);
+}
+
+.meteo-hours {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+  align-items: stretch;
+}
+
+.meteo-hour {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  background: var(--bg-card);
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  min-width: 0;
+}
+
+.meteo-hour.night {
+  background: var(--night-bg);
+  border-color: var(--night);
+}
+
+.meteo-hour .h {
+  font-family: 'JetBrains Mono';
+  font-size: 0.65rem;
+  color: var(--text-mute);
+  letter-spacing: 0.05em;
+}
+
+.meteo-hour .ico {
+  color: var(--text-dim);
+  line-height: 0;
+}
+
+.meteo-hour.night .ico { color: var(--night); }
+.meteo-hour.sun-ico .ico { color: var(--day); }
+
+.meteo-hour .t {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.meteo-hour .t.cold { color: var(--night); }
+.meteo-hour .t.cool { color: #8dd0ff; }
+.meteo-hour .t.mild { color: var(--ok); }
+.meteo-hour .t.warm { color: var(--day); }
+
+.parcours-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.parcours-stats .cell {
+  background: var(--bg-elev);
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.parcours-stats .cell .l {
+  font-family: 'JetBrains Mono';
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 4px;
+}
+
+.parcours-stats .cell .v {
+  font-family: 'Bricolage Grotesque';
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.parcours-stats .cell .v.dplus { color: var(--warn); }
+.parcours-stats .cell .v.dmoins { color: var(--night); }
+
+/* Météo dans la timeline continuum */
+.tl-meteo-col {
+  position: absolute;
+  right: -68px;
+  width: 56px;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.tl-meteo-cell {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 80px; /* = hour-h */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-mute);
+}
+
+.tl-meteo-cell .ico { line-height: 0; opacity: 0.6; }
+.tl-meteo-cell .t {
+  font-family: 'JetBrains Mono';
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.tl-meteo-cell.night { color: var(--night); }
+.tl-meteo-cell.night .ico { color: var(--night); opacity: 0.5; }
+.tl-meteo-cell.night .t { color: var(--night); opacity: 0.85; }
+
+/* Ajustement du conteneur scale pour intégrer la colonne météo à droite */
+.tl-scale.with-meteo { padding-right: 72px; }
+
+@media (max-width: 768px) {
+  .tl-meteo-col { right: -42px; width: 36px; }
+  .tl-meteo-cell { height: 48px; }
+  .tl-meteo-cell .t { font-size: 0.6rem; }
+  .tl-scale.with-meteo { padding-right: 44px; }
+  .meteo-hour .t { font-size: 0.82rem; }
+  .meteo-hour { padding: 6px 2px; }
+}
+
+/* === RESPONSIVE === */
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .container { padding: 20px 16px 60px; }
+  .header { grid-template-columns: 1fr; }
+  .header-meta { text-align: left; }
+  .body-grid { grid-template-columns: 1fr; }
+  .mission-header { grid-template-columns: 60px 1fr 24px; padding: 16px; gap: 12px; }
+  .mission-num { font-size: 2rem; }
+  .info-block li { grid-template-columns: 1fr; gap: 2px; }
+  .tl-scale { --hour-h: 48px; --rail-w: 56px; }
+  .tl-hour { font-size: 0.62rem; padding-right: 8px; }
+  .tl-event .e-title { font-size: 0.78rem; }
+  .tl-event .e-title .e-tag { font-size: 0.55rem; padding: 1px 4px; }
+  .tl-event .e-sub { font-size: 0.62rem; }
+  .tl-event .e-times { font-size: 0.6rem; display: block; margin-left: 0; margin-top: 2px; }
+  .tl-event .content { padding: 6px 9px; }
+}
+
+/* === PRINT === */
+@media print {
+  body { background: white; color: black; }
+  .day-tabs, .chevron { display: none; }
+  .mission-body { max-height: none !important; }
+  .timeline-section { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <h1>Roadbook<br><span class="accent">/ Trail Alsace 2026</span></h1>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <div class="day-tabs">
+    <button class="day-tab active" data-day="continuum">Continuum<span class="day-date">vue 3 jours</span></button>
+    <button class="day-tab" data-day="m1">Mission 01<span class="day-date">ven 07:30 · balisage</span></button>
+    <button class="day-tab" data-day="m2">Mission 02<span class="day-date">ven 20:09 · fermeur nuit</span></button>
+    <button class="day-tab" data-day="m3">Mission 03<span class="day-date">sam 21:00 · fermeur nuit</span></button>
+    <button class="day-tab" data-day="m4">Mission 04<span class="day-date">dim 07:00 · PC course</span></button>
+  </div>
+
+  <!-- ==================== CONTINUUM ==================== -->
+  <section class="timeline-section active" data-section="continuum">
+    <div class="day-header">
+      <h2>Continuum 3 jours</h2>
+      <span class="day-tag">Échelle horaire régulière · ven 06:00 → dim 13:00 · 55h00 couvertes</span>
+    </div>
+
+    <div class="continuum-legend">
+      <div class="item"><span class="swatch sw-mission"></span>Mission</div>
+      <div class="item"><span class="swatch sw-travel"></span>Trajet / prép</div>
+      <div class="item"><span class="swatch sw-rest"></span>Repos / sommeil</div>
+      <div class="item"><span class="swatch sw-blocker"></span>Bloquant à régler</div>
+      <div class="item"><span class="swatch sw-night"></span>Nuit (21h → 06h)</div>
+    </div>
+
+    <div class="continuum-wrap">
+      <div class="tl-scale with-meteo" style="height:4400.0px;">
+        <div class="tl-meteo-col"><div class="tl-meteo-cell" style="top:0px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">5°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:80px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">6°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:160px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:240px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:320px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">8°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:400px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:480px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">10°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:560px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">8°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:640px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="m13 13-3 5h4l-3 5"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:720px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="m13 13-3 5h4l-3 5"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:800px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:880px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:960px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">6°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:1040px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:1120px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">6°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1200px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">5°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1280px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">4°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1360px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">4°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1440px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">3°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1520px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">2°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1600px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">1°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1680px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">2°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1760px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">2°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:1840px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">2°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:1920px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">4°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2000px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">5°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2080px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">6°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2160px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2240px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">8°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2320px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2400px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">10°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2480px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">10°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2560px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">10°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2640px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2720px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2800px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">9°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2880px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:2960px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">8°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:3040px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t">7°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3120px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M17.5 17a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 9.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M9 20v2M13 20v2M17 20v2"/></svg></span>
+        <span class="t">5°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3200px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">4°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3280px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t">3°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3360px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">3°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3440px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">2°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3520px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">1°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3600px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">1°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3680px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">1°</span>
+      </div>
+<div class="tl-meteo-cell night" style="top:3760px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t">1°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:3840px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+        <span class="t">4°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:3920px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+        <span class="t">6°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:4000px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+        <span class="t">8°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:4080px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+        <span class="t">10°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:4160px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">11°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:4240px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">12°</span>
+      </div>
+<div class="tl-meteo-cell" style="top:4320px;">
+        <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t">13°</span>
+      </div></div>
+    <div class="tl-hour major" style="top:0.0px;">06:00</div>
+    <div class="tl-hour" style="top:80.0px;">07:00</div>
+    <div class="tl-hour even" style="top:160.0px;">08:00</div>
+    <div class="tl-hour" style="top:240.0px;">09:00</div>
+    <div class="tl-hour even" style="top:320.0px;">10:00</div>
+    <div class="tl-hour" style="top:400.0px;">11:00</div>
+    <div class="tl-hour major" style="top:480.0px;">12:00</div>
+    <div class="tl-hour" style="top:560.0px;">13:00</div>
+    <div class="tl-hour even" style="top:640.0px;">14:00</div>
+    <div class="tl-hour" style="top:720.0px;">15:00</div>
+    <div class="tl-hour even" style="top:800.0px;">16:00</div>
+    <div class="tl-hour" style="top:880.0px;">17:00</div>
+    <div class="tl-hour major" style="top:960.0px;">18:00</div>
+    <div class="tl-hour" style="top:1040.0px;">19:00</div>
+    <div class="tl-hour even" style="top:1120.0px;">20:00</div>
+    <div class="tl-hour" style="top:1200.0px;">21:00</div>
+    <div class="tl-hour even" style="top:1280.0px;">22:00</div>
+    <div class="tl-hour" style="top:1360.0px;">23:00</div>
+    <div class="tl-hour major" style="top:1440.0px;">00:00</div>
+    <div class="tl-hour" style="top:1520.0px;">01:00</div>
+    <div class="tl-hour even" style="top:1600.0px;">02:00</div>
+    <div class="tl-hour" style="top:1680.0px;">03:00</div>
+    <div class="tl-hour even" style="top:1760.0px;">04:00</div>
+    <div class="tl-hour" style="top:1840.0px;">05:00</div>
+    <div class="tl-hour major" style="top:1920.0px;">06:00</div>
+    <div class="tl-hour" style="top:2000.0px;">07:00</div>
+    <div class="tl-hour even" style="top:2080.0px;">08:00</div>
+    <div class="tl-hour" style="top:2160.0px;">09:00</div>
+    <div class="tl-hour even" style="top:2240.0px;">10:00</div>
+    <div class="tl-hour" style="top:2320.0px;">11:00</div>
+    <div class="tl-hour major" style="top:2400.0px;">12:00</div>
+    <div class="tl-hour" style="top:2480.0px;">13:00</div>
+    <div class="tl-hour even" style="top:2560.0px;">14:00</div>
+    <div class="tl-hour" style="top:2640.0px;">15:00</div>
+    <div class="tl-hour even" style="top:2720.0px;">16:00</div>
+    <div class="tl-hour" style="top:2800.0px;">17:00</div>
+    <div class="tl-hour major" style="top:2880.0px;">18:00</div>
+    <div class="tl-hour" style="top:2960.0px;">19:00</div>
+    <div class="tl-hour even" style="top:3040.0px;">20:00</div>
+    <div class="tl-hour" style="top:3120.0px;">21:00</div>
+    <div class="tl-hour even" style="top:3200.0px;">22:00</div>
+    <div class="tl-hour" style="top:3280.0px;">23:00</div>
+    <div class="tl-hour major" style="top:3360.0px;">00:00</div>
+    <div class="tl-hour" style="top:3440.0px;">01:00</div>
+    <div class="tl-hour even" style="top:3520.0px;">02:00</div>
+    <div class="tl-hour" style="top:3600.0px;">03:00</div>
+    <div class="tl-hour even" style="top:3680.0px;">04:00</div>
+    <div class="tl-hour" style="top:3760.0px;">05:00</div>
+    <div class="tl-hour major" style="top:3840.0px;">06:00</div>
+    <div class="tl-hour" style="top:3920.0px;">07:00</div>
+    <div class="tl-hour even" style="top:4000.0px;">08:00</div>
+    <div class="tl-hour" style="top:4080.0px;">09:00</div>
+    <div class="tl-hour even" style="top:4160.0px;">10:00</div>
+    <div class="tl-hour" style="top:4240.0px;">11:00</div>
+    <div class="tl-hour major" style="top:4320.0px;">12:00</div>
+    <div class="tl-hour" style="top:4400.0px;">13:00</div>
+    <div class="tl-night-band" style="top:1200.0px;height:720.0px;"><span class="lbl">NUIT</span></div>
+    <div class="tl-night-band" style="top:3120.0px;height:720.0px;"><span class="lbl">NUIT</span></div>
+    <div class="tl-day-divider" style="top:calc(0.0px - 14px);"><span class="label">VEN 15 MAI · 06:00</span></div>
+    <div class="tl-day-divider" style="top:calc(1440.0px - 14px);"><span class="label">SAM 16 MAI · 00:00</span></div>
+    <div class="tl-day-divider" style="top:calc(3360.0px - 14px);"><span class="label">DIM 17 MAI · 00:00</span></div>
+    <div class="tl-event ev-travel" style="top:46.7px;height:53.3px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Barr<span class="e-times">06:35 → 07:15 · 40min</span></div>
+        <div class="e-sub">~40 min · voiture chargée</div>
+      </div>
+    </div>
+    <div class="tl-event short ev-travel" style="top:100.0px;height:20.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Pickup</span>Récup Thierry → Andlau<span class="e-times">07:15 → 07:30 · 15min</span></div>
+        <div class="e-sub">~15 min</div>
+      </div>
+    </div>
+    <div class="tl-event ev-mission role-verif" style="top:120.0px;height:280.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">M1</span>Vérif balisage · Andlau → Barr<span class="e-times">07:30 → 11:00 · 3h30</span></div>
+        <div class="e-sub">100K · Ouvreur · binôme Thierry · 3h30</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:400.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">À pied</span>Marche/footing Barr → Andlau<span class="e-times">11:00 → 11:30 · 30min</span></div>
+        <div class="e-sub">~4 km · récup voiture</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:440.0px;height:60.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg<span class="e-times">11:30 → 12:15 · 45min</span></div>
+        <div class="e-sub">~45 min</div>
+      </div>
+    </div>
+    <div class="tl-event ev-rest" style="top:500.0px;height:540.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Récup</span>Repas · sieste · prép M2<span class="e-times">12:15 → 19:00 · 6h45</span></div>
+        <div class="e-sub">~6h45 · fenêtre récup avant nuit</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:1040.0px;height:53.3px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Barr (avec Meghann)<span class="e-times">19:00 → 19:40 · 40min</span></div>
+        <div class="e-sub">~40 min</div>
+      </div>
+    </div>
+    <div class="tl-event short ev-travel" style="top:1093.3px;height:38.7px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Prép</span>Récup matériel fermeur · check radio + LiveTrail<span class="e-times">19:40 → 20:09 · 29min</span></div>
+        <div class="e-sub">À Barr</div>
+      </div>
+    </div>
+    <div class="tl-event ev-mission role-ferm" style="top:1132.0px;height:332.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">M2</span>Fermeur · Barr → Sainte-Odile<span class="e-times">20:09 → 00:18 · 4h09</span></div>
+        <div class="e-sub">100K · Fermeur nuit · trinôme + Meghann + Louis · 4h09</div>
+      </div>
+    </div>
+    <div class="tl-event ev-blocker" style="top:1464.0px;height:96.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">⚠</span>Descente Sainte-Odile → véhicule<span class="e-times">00:18 → 01:30 · 1h12</span></div>
+        <div class="e-sub">Sans solution validée : retour aléatoire</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:1560.0px;height:60.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg (sous réserve solution)<span class="e-times">01:30 → 02:15 · 45min</span></div>
+        <div class="e-sub">~45 min estimé</div>
+      </div>
+    </div>
+    <div class="tl-event ev-rest" style="top:1620.0px;height:1380.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Sommeil</span>Nuit + journée samedi · récupération complète<span class="e-times">02:15 → 19:30 · 17h15</span></div>
+        <div class="e-sub">~17h15 · plus grosse fenêtre · prioriser sommeil</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:3000.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Obernai (avec Meghann)<span class="e-times">19:30 → 20:00 · 30min</span></div>
+        <div class="e-sub">~30 min</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:3040.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Prép</span>Récup matériel fermeur au PC Obernai<span class="e-times">20:00 → 20:30 · 30min</span></div>
+        <div class="e-sub">53 rue de Sélestat</div>
+      </div>
+    </div>
+    <div class="tl-event ev-blocker" style="top:3080.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">⚠</span>Transfert vers Ottrott (départ M3)<span class="e-times">20:30 → 21:00 · 30min</span></div>
+        <div class="e-sub">1 voiture · solution navette à valider</div>
+      </div>
+    </div>
+    <div class="tl-event ev-mission role-ferm" style="top:3120.0px;height:180.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">M3</span>Fermeur · Ottrott → Obernai<span class="e-times">21:00 → 23:15 · 2h15</span></div>
+        <div class="e-sub">20K/RDP · Fermeur nuit · binôme Meghann · 2h15</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:3340.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg<span class="e-times">23:45 → 00:15 · 30min</span></div>
+        <div class="e-sub">~30 min</div>
+      </div>
+    </div>
+    <div class="tl-event ev-rest" style="top:3380.0px;height:446.7px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Sommeil court</span>Nuit Strasbourg<span class="e-times">00:15 → 05:50 · 5h35</span></div>
+        <div class="e-sub">~5h35 utiles · vigilance routière au réveil</div>
+      </div>
+    </div>
+    <div class="tl-event short ev-travel" style="top:3826.7px;height:33.3px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Prép</span>Lever · PC portable + chargeur<span class="e-times">05:50 → 06:15 · 25min</span></div>
+        <div class="e-sub">25 min</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:3860.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Obernai<span class="e-times">06:15 → 06:45 · 30min</span></div>
+        <div class="e-sub">~30 min</div>
+      </div>
+    </div>
+    <div class="tl-event short ev-travel" style="top:3900.0px;height:20.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Prép</span>Arrivée PC · passation consignes<span class="e-times">06:45 → 07:00 · 15min</span></div>
+        <div class="e-sub">15 min · code 2016 · parking Remparts</div>
+      </div>
+    </div>
+    <div class="tl-event ev-mission role-pc" style="top:3920.0px;height:400.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">M4</span>PC Course · Assistant 2<span class="e-times">07:00 → 12:00 · 5h00</span></div>
+        <div class="e-sub">Sédentaire · suivi LiveTrail · 5h</div>
+      </div>
+    </div>
+    <div class="tl-event ev-travel" style="top:4320.0px;height:40.0px;">
+      <div class="bar"></div>
+      <div class="content">
+        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg · fin week-end<span class="e-times">12:00 → 12:30 · 30min</span></div>
+        <div class="e-sub">~30 min</div>
+      </div>
+    </div>
+      </div>
+
+
+    <div class="continuum-totals">
+      <div class="cell"><div class="l">Durée totale</div><div class="v">55h00</div></div>
+      <div class="cell"><div class="l">Missions</div><div class="v accent">14h54</div></div>
+      <div class="cell"><div class="l">Trajets & prép</div><div class="v">7h14</div></div>
+      <div class="cell"><div class="l">Repos / dispo</div><div class="v rest-c">29h35</div></div>
+      <div class="cell"><div class="l">Bloquants</div><div class="v warn-c">1h42</div></div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ==================== MISSION 01 ==================== -->
+  <section class="timeline-section" data-section="m1">
+    <div class="day-header">
+      <h2>Mission 01 · Vérification balisage Andlau → Barr</h2>
+      <span class="day-tag">Ven 15.05 · 07:30 → 11:00 · 100K · Ouvreur</span>
+    </div>
+
+    <div class="mission" data-mission="1">
+      <div class="mission-header">
+        <div class="mission-num">01</div>
+        <div class="mission-title-wrap">
+          <h3>Vérification du balisage · Andlau → Barr</h3>
+          <div class="mission-meta">
+            <span><strong>07:30 → 11:00</strong></span>
+            <span>·</span>
+            <span>100K</span>
+            <span>·</span>
+            <span>Binôme Thierry Thoa</span>
+          </div>
+        </div>
+        <div class="mission-actions">
+          <span class="badge role-verif">Ouvreur</span>
+          <span class="badge tod-day">Jour</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="mission-body">
+        <div class="mission-body-inner">
+
+          <div class="body-grid">
+            <div class="info-block">
+              <h4>Briefing mission</h4>
+              <ul>
+                <li><span class="key">Course</span><span class="val">100K — section Andlau / Barr</span></li>
+                <li><span class="key">Trace GPX</span><span class="val"><a href="https://www.openrunner.com/route-details/24023813" target="_blank">openrunner #24023813</a></span></li>
+                <li><span class="key">Matériel</span><span class="val">Kit balisage récupéré 14/05 à Obernai ✓</span></li>
+                <li><span class="key">Priorité</span><span class="val">Sur-baliser plutôt que sous-baliser. Sens course. Esprit coureur.</span></li>
+              </ul>
+              <div class="parcours-stats">
+    <div class="cell"><div class="l">Distance</div><div class="v">12,36 km</div></div>
+    <div class="cell"><div class="l">Dénivelé +</div><div class="v dplus">+312 m</div></div>
+    <div class="cell"><div class="l">Dénivelé −</div><div class="v dmoins">−331 m</div></div>
+  </div>
+            </div>
+
+            <div class="info-block">
+              <h4>Contacts mission</h4>
+              <ul>
+                <li><span class="key">Binôme</span><span class="val">Thierry Thoa<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">+33 6 73 64 50 83</span></span></li>
+                <li><span class="key">Particularité</span><span class="val">Pas de véhicule · habite à Barr · à prendre en charge</span></li>
+                <li><span class="key">Chef de poste</span><span class="val">Pierre Leclercq<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">06 75 24 11 73</span></span></li>
+                <li><span class="key">Communication</span><span class="val">WhatsApp privilégié · tél urgence seulement</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="logistics">
+            <div class="logistics-title">Plan logistique</div>
+            <ol class="logistics-steps">
+              <li><span class="time">~06:35</span>Départ Strasbourg en voiture</li>
+              <li><span class="time">~07:15</span>Arrivée Barr — récupération Thierry à son domicile</li>
+              <li><span class="time">~07:25</span>Trajet Barr → Andlau (10 min)</li>
+              <li><span class="time">07:30</span><strong>Top mission</strong> · départ vérif balisage à Andlau (sens course)</li>
+              <li><span class="time">~11:00</span>Arrivée Barr · dépose Thierry chez lui</li>
+              <li><span class="time">~11:00</span>Footing/marche retour Barr → Andlau (~4 km) pour récupérer la voiture</li>
+              <li><span class="time">~11:30</span>Retour Strasbourg · récup / repas / sommeil avant M2</li>
+            </ol>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">RAPPEL</span>
+            <div class="alert-content">
+              <p><strong>L'horaire 07:30 est l'heure de prise de poste sur site à Andlau</strong>, pas l'heure de départ. Tenir compte du trajet + récupération Thierry.</p>
+            </div>
+          </div>
+
+          <div class="meteo-strip">
+    <div class="meteo-strip-title">Météo prévisionnelle <span class="ressenti">Température ressentie</span></div>
+    <div class="meteo-hours"><div class="meteo-hour sun-ico">
+        <span class="h">07h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t cool">6°</span>
+      </div>
+<div class="meteo-hour sun-ico">
+        <span class="h">08h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t cool">7°</span>
+      </div>
+<div class="meteo-hour">
+        <span class="h">09h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cool">7°</span>
+      </div>
+<div class="meteo-hour">
+        <span class="h">10h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 11.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cool">8°</span>
+      </div>
+<div class="meteo-hour">
+        <span class="h">11h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 6.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M8 17v3M12 19v3M16 17v3"/></svg></span>
+        <span class="t cool">9°</span>
+      </div></div>
+  </div>
+
+          <div class="body-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <h4>Checklist matériel · à cocher avant départ</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m1c1"><label for="m1c1">Kit balisage chargé dans voiture (récup 14/05 ✓)</label></li>
+                <li><input type="checkbox" id="m1c2"><label for="m1c2">Trace GPX importée (montre ou téléphone)</label></li>
+                <li><input type="checkbox" id="m1c3"><label for="m1c3">Sac à dos</label></li>
+                <li><input type="checkbox" id="m1c4"><label for="m1c4">Gros tournevis (avant-trou piquets)</label></li>
+                <li><input type="checkbox" id="m1c5"><label for="m1c5">Gants résistants (fibre de verre)</label></li>
+                <li><input type="checkbox" id="m1c6"><label for="m1c6">Frontale (par précaution)</label></li>
+                <li><input type="checkbox" id="m1c7"><label for="m1c7">Téléphone chargé + WhatsApp opérationnel</label></li>
+                <li><input type="checkbox" id="m1c8"><label for="m1c8">Batterie externe</label></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h4>À régler avant la mission</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m1t1"><label for="m1t1">Prévenir Thierry · confirmer RDV Barr ~07:15</label></li>
+                <li><input type="checkbox" id="m1t2"><label for="m1t2">Récupérer dotations + accréditation + tickets repas (espace bénévoles Obernai)</label></li>
+                <li><input type="checkbox" id="m1t3"><label for="m1t3">Vérifier instructions de pose (rappel : piquets en avant-trou, pas de marteau)</label></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">RÈGLES POSE</span>
+            <div class="alert-content">
+              <p><strong>Régularité :</strong> ~100 m sur sentier rectiligne dégagé, plus rapproché si sinueux/forêt. <strong>Après intersections :</strong> confirmer par 4 balises espacées de 10 m. <strong>Raccourcis :</strong> barrer avec rubalise + piquets/pierres/branches.</p>
+              <p><strong>Craie :</strong> uniquement sur goudron en zone urbanisée, jamais sur sentiers, bâtiments, rochers. Marques 40 cm max, à plat.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MISSION 02 ==================== -->
+  <section class="timeline-section" data-section="m2">
+    <div class="day-header">
+      <h2>Mission 02 · Fermeur Barr → Sainte-Odile</h2>
+      <span class="day-tag">Ven 15.05 · 20:09 → Sam 16.05 · 00:18 · 100K · Nuit</span>
+    </div>
+
+    <div class="mission" data-mission="2">
+      <div class="mission-header">
+        <div class="mission-num">02</div>
+        <div class="mission-title-wrap">
+          <h3>Fermeur · Barr → Ravito Sainte-Odile</h3>
+          <div class="mission-meta">
+            <span><strong>20:09 → 00:18</strong> (J+1)</span>
+            <span>·</span>
+            <span>100K</span>
+            <span>·</span>
+            <span>Trinôme Meghann + Louis</span>
+          </div>
+        </div>
+        <div class="mission-actions">
+          <span class="badge role-ferm">Fermeur</span>
+          <span class="badge tod-night">Nuit</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="mission-body">
+        <div class="mission-body-inner">
+
+          <div class="body-grid">
+            <div class="info-block">
+              <h4>Briefing mission</h4>
+              <ul>
+                <li><span class="key">Course</span><span class="val">100K — section Barr / Ravito Sainte-Odile</span></li>
+                <li><span class="key">Durée</span><span class="val">~4h09 · de nuit</span></li>
+                <li><span class="key">Trace GPX</span><span class="val"><a href="https://www.openrunner.com/route-details/24023817" target="_blank">openrunner #24023817</a></span></li>
+                <li><span class="key">Matériel à récup.</span><span class="val">Radio + procédure abandons + annuaire (avant 20:09 à Barr)</span></li>
+                <li><span class="key">Tâches clés</span><span class="val">Neutraliser dossards abandons (découpe code-barres + récup puce sac) · informer PC en temps réel</span></li>
+              </ul>
+              <div class="parcours-stats">
+    <div class="cell"><div class="l">Distance</div><div class="v">16,35 km</div></div>
+    <div class="cell"><div class="l">Dénivelé +</div><div class="v dplus">+641 m</div></div>
+    <div class="cell"><div class="l">Dénivelé −</div><div class="v dmoins">−345 m</div></div>
+  </div>
+            </div>
+
+            <div class="info-block">
+              <h4>Contacts mission</h4>
+              <ul>
+                <li><span class="key">Coéq. 1</span><span class="val">Meghann</span></li>
+                <li><span class="key">Coéq. 2</span><span class="val">Louis Charpentier<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">06 43 42 56 74</span></span></li>
+                <li><span class="key">Chef de poste</span><span class="val">Pierre Leclercq<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">06 75 24 11 73</span></span></li>
+                <li><span class="key">PC Course</span><span class="val" style="font-family:'JetBrains Mono';color:var(--accent);">+33 9 72 16 67 25</span></li>
+                <li><span class="key">Procédure radio</span><span class="val">« Appelé pour appelant » · confirmer réception · clore par « message terminé »</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="logistics">
+            <div class="logistics-title">Plan logistique</div>
+            <ol class="logistics-steps">
+              <li><span class="time">~19:00</span>Départ Strasbourg (avec Meghann)</li>
+              <li><span class="time">~19:40</span>Arrivée Barr — récupération matériel fermeur (radio, annuaire, procédures)</li>
+              <li><span class="time">~19:50</span>Vérification matériel : radio + tél (chargé) + LiveTrail installé</li>
+              <li><span class="time">20:09</span><strong>Top mission</strong> · départ fermeture derrière dernier coureur 100K</li>
+              <li><span class="time">00:18</span>Arrivée Ravito Sainte-Odile · transmission codes-barres + puces des abandons</li>
+              <li><span class="time">??:??</span><strong>À résoudre :</strong> redescente depuis Sainte-Odile (voir alerte)</li>
+              <li><span class="time">~01:30</span>Retour estimé Strasbourg (sous réserve solution descente)</li>
+            </ol>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">BLOQUANT</span>
+            <div class="alert-content">
+              <p><strong>Problème véhicule à résoudre absolument.</strong> Départ à pied de Barr, fin à Sainte-Odile (~10 km à vol d'oiseau, en altitude). Sans navette, retour très contraint.</p>
+              <p><strong>Options :</strong> voiture laissée en amont à Sainte-Odile (qui fait la navette ?) · co-voiturage avec autre équipe fermeurs · navette organisateur (à demander à Pierre) · récupération par tiers.</p>
+            </div>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">ZONE</span>
+            <div class="alert-content">
+              <p>Sentiers forestiers, connectivité partielle. Si WhatsApp ne passe pas : téléphone classique, ou radio (Pierre Leclercq dispo).</p>
+            </div>
+          </div>
+
+          <div class="meteo-strip">
+    <div class="meteo-strip-title">Météo prévisionnelle <span class="ressenti">Température ressentie</span></div>
+    <div class="meteo-hours"><div class="meteo-hour sun-ico">
+        <span class="h">20h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v1M3.93 5.93l.7.7M2 10h1M8 16a4 4 0 0 1-3.46-2"/><path d="M11 4a4 4 0 0 1 3.46 2"/><path d="M16 14a4 4 0 0 0 0-8 5 5 0 0 0-9 1 4 4 0 0 0-1.5 7.7"/><path d="M5 18a4 4 0 0 1 4-4h7a4 4 0 0 1 0 8H9a4 4 0 0 1-4-4z"/></svg></span>
+        <span class="t cool">6°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">21h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cool">5°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">22h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cold">4°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">23h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cold">4°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">00h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="t cold">3°</span>
+      </div></div>
+  </div>
+
+          <div class="body-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <h4>Checklist matériel · à cocher avant départ</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m2c1"><label for="m2c1">Matériel coureur obligatoire (vestes coupe-vent/pluie, couverture survie)</label></li>
+                <li><input type="checkbox" id="m2c2"><label for="m2c2">Frontale forte + frontale secours</label></li>
+                <li><input type="checkbox" id="m2c3"><label for="m2c3">Batterie externe (2 si possible)</label></li>
+                <li><input type="checkbox" id="m2c4"><label for="m2c4">Ciseaux (neutralisation dossards)</label></li>
+                <li><input type="checkbox" id="m2c5"><label for="m2c5">LiveTrail installé + testé</label></li>
+                <li><input type="checkbox" id="m2c6"><label for="m2c6">Trace GPX importée</label></li>
+                <li><input type="checkbox" id="m2c7"><label for="m2c7">Tenue adaptée nuit moyenne montagne (~760m, ~mai)</label></li>
+                <li><input type="checkbox" id="m2c8"><label for="m2c8">Eau + ravito personnel pour 4h+</label></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h4>À régler avant la mission</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m2t1"><label for="m2t1" style="color:var(--warn);">⚠ Coordonner avec Louis (06 43 42 56 74)</label></li>
+                <li><input type="checkbox" id="m2t2"><label for="m2t2" style="color:var(--warn);">⚠ Valider solution descente Sainte-Odile</label></li>
+                <li><input type="checkbox" id="m2t3"><label for="m2t3">Confirmer point de récupération matériel fermeur avec Pierre</label></li>
+                <li><input type="checkbox" id="m2t4"><label for="m2t4">Confirmer participation Meghann (mission nocturne en crête)</label></li>
+                <li><input type="checkbox" id="m2t5"><label for="m2t5">Lire procédure abandons (annexe fiche poste)</label></li>
+                <li><input type="checkbox" id="m2t6"><label for="m2t6">Récup itinéraire de repli si donné par CDP</label></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">PROC ABANDON</span>
+            <div class="alert-content">
+              <p><strong>Si coureur abandonne sur parcours :</strong> 1) découper coin dossard avec code-barres, ranger dans pochette plastique · 2) retirer puce arrière du sac, ranger pochette · 3) appeler immédiatement PC Course pour signaler.</p>
+              <p><strong>Si demi-tour vers poste précédent :</strong> contacter PC pour que le poste précédent attende avant fermeture. <strong>Si veut continuer mais abandonner plus loin :</strong> accompagner jusqu'au prochain point de contrôle.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MISSION 03 ==================== -->
+  <section class="timeline-section" data-section="m3">
+    <div class="day-header">
+      <h2>Mission 03 · Fermeur Ottrott → Obernai</h2>
+      <span class="day-tag">Sam 16.05 · 21:00 → 23:15 · 20K/RDP · Nuit</span>
+    </div>
+
+    <div class="mission" data-mission="3">
+      <div class="mission-header">
+        <div class="mission-num">03</div>
+        <div class="mission-title-wrap">
+          <h3>Fermeur · Ravito Ottrott → Obernai</h3>
+          <div class="mission-meta">
+            <span><strong>21:00 → 23:15</strong></span>
+            <span>·</span>
+            <span>20K / RDP</span>
+            <span>·</span>
+            <span>Binôme Meghann</span>
+          </div>
+        </div>
+        <div class="mission-actions">
+          <span class="badge role-ferm">Fermeur</span>
+          <span class="badge tod-night">Nuit</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="mission-body">
+        <div class="mission-body-inner">
+
+          <div class="body-grid">
+            <div class="info-block">
+              <h4>Briefing mission</h4>
+              <ul>
+                <li><span class="key">Course</span><span class="val">20K / RDP — section Ottrott / Obernai</span></li>
+                <li><span class="key">Durée</span><span class="val">~2h15 · de nuit</span></li>
+                <li><span class="key">Trace GPX</span><span class="val"><a href="https://www.openrunner.com/route-details/24023821" target="_blank">openrunner #24023821</a></span></li>
+                <li><span class="key">Distance</span><span class="val">Ottrott → Obernai ~6 km</span></li>
+                <li><span class="key">Tâches clés</span><span class="val">Idem M2 · proc abandons · veille radio · transmission codes-barres à l'arrivée</span></li>
+              </ul>
+              <div class="parcours-stats">
+    <div class="cell"><div class="l">Distance</div><div class="v">11,4 km</div></div>
+    <div class="cell"><div class="l">Dénivelé +</div><div class="v dplus">+135 m</div></div>
+    <div class="cell"><div class="l">Dénivelé −</div><div class="v dmoins">−217 m</div></div>
+  </div>
+            </div>
+
+            <div class="info-block">
+              <h4>Contacts mission</h4>
+              <ul>
+                <li><span class="key">Binôme</span><span class="val">Meghann</span></li>
+                <li><span class="key">Véhicules</span><span class="val">1 seule voiture disponible</span></li>
+                <li><span class="key">Chef de poste</span><span class="val">Pierre Leclercq<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">06 75 24 11 73</span></span></li>
+                <li><span class="key">PC Course</span><span class="val" style="font-family:'JetBrains Mono';color:var(--accent);">+33 9 72 16 67 25</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="logistics">
+            <div class="logistics-title">Plan logistique</div>
+            <ol class="logistics-steps">
+              <li><span class="time">~19:30</span>Départ Strasbourg → Obernai</li>
+              <li><span class="time">~20:00</span>Récupération matériel fermeur au PC Obernai (53 rue de Sélestat)</li>
+              <li><span class="time">??:??</span><strong>À résoudre :</strong> transfert Ottrott (départ mission)</li>
+              <li><span class="time">21:00</span><strong>Top mission</strong> · départ fermeture à Ottrott</li>
+              <li><span class="time">23:15</span>Arrivée Obernai · transmission abandons · récupération voiture</li>
+              <li><span class="time">~00:00</span>Retour Strasbourg</li>
+            </ol>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">BLOQUANT</span>
+            <div class="alert-content">
+              <p><strong>Problème véhicule à résoudre.</strong> 1 voiture, départ Ottrott, arrivée Obernai (~6 km).</p>
+              <p><strong>Options :</strong> navette organisateur Obernai↔Ottrott (très probable — demander à Pierre, c'est le hub) · co-voiturage autre équipe · dépose Ottrott par tiers · vélos.</p>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">RÉCUP</span>
+            <div class="alert-content">
+              <p>2e nuit consécutive en mission. <strong>Prioriser sommeil samedi journée</strong> entre M2 et M3 (~19h dispo, plus grosse fenêtre du week-end).</p>
+            </div>
+          </div>
+
+          <div class="meteo-strip">
+    <div class="meteo-strip-title">Météo prévisionnelle <span class="ressenti">Température ressentie</span></div>
+    <div class="meteo-hours"><div class="meteo-hour night">
+        <span class="h">21h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M17.5 17a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 9.5a4.5 4.5 0 0 0 .5 8.98"/><path d="M9 20v2M13 20v2M17 20v2"/></svg></span>
+        <span class="t cool">5°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">22h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cold">4°</span>
+      </div>
+<div class="meteo-hour night">
+        <span class="h">23h</span>
+        <span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a6 6 0 0 0-3.5 10.5"/><path d="M21 12.79A9 9 0 0 1 11.21 3"/><path d="M17.5 21a4.5 4.5 0 1 0 0-9c-.07 0-.13 0-.2.01A6 6 0 0 0 6 13.5a4.5 4.5 0 0 0 .5 8.98"/></svg></span>
+        <span class="t cold">3°</span>
+      </div></div>
+  </div>
+
+          <div class="body-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <h4>Checklist matériel · à cocher avant départ</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m3c1"><label for="m3c1">Matériel coureur obligatoire</label></li>
+                <li><input type="checkbox" id="m3c2"><label for="m3c2">Frontale + frontale secours + batterie externe</label></li>
+                <li><input type="checkbox" id="m3c3"><label for="m3c3">Ciseaux (neutralisation dossards)</label></li>
+                <li><input type="checkbox" id="m3c4"><label for="m3c4">LiveTrail opérationnel</label></li>
+                <li><input type="checkbox" id="m3c5"><label for="m3c5">Trace GPX importée</label></li>
+                <li><input type="checkbox" id="m3c6"><label for="m3c6">Tenue nuit (température mai, terrain forestier)</label></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h4>À régler avant la mission</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m3t1"><label for="m3t1" style="color:var(--warn);">⚠ Valider solution navette Obernai → Ottrott</label></li>
+                <li><input type="checkbox" id="m3t2"><label for="m3t2">Confirmer récupération matériel fermeur (au PC Obernai 20:00 ?)</label></li>
+                <li><input type="checkbox" id="m3t3"><label for="m3t3">Repos samedi journée pris (sommeil prioritaire)</label></li>
+                <li><input type="checkbox" id="m3t4"><label for="m3t4">Recharger frontale + batterie externe entre M2 et M3</label></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MISSION 04 ==================== -->
+  <section class="timeline-section" data-section="m4">
+    <div class="day-header">
+      <h2>Mission 04 · PC Course Assistant 2</h2>
+      <span class="day-tag">Dim 17.05 · 07:00 → 12:00 · Obernai · Sédentaire</span>
+    </div>
+
+    <div class="mission" data-mission="4">
+      <div class="mission-header">
+        <div class="mission-num">04</div>
+        <div class="mission-title-wrap">
+          <h3>PC Course · Assistant 2</h3>
+          <div class="mission-meta">
+            <span><strong>07:00 → 12:00</strong></span>
+            <span>·</span>
+            <span>Obernai</span>
+            <span>·</span>
+            <span>Sédentaire</span>
+          </div>
+        </div>
+        <div class="mission-actions">
+          <span class="badge role-pc">PC Course</span>
+          <span class="badge tod-day">Jour</span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="mission-body">
+        <div class="mission-body-inner">
+
+          <div class="body-grid">
+            <div class="info-block">
+              <h4>Briefing mission</h4>
+              <ul>
+                <li><span class="key">Rôle</span><span class="val">Assistant RDE · standard tél · suivi LiveTrail</span></li>
+                <li><span class="key">Lieu</span><span class="val">53 rue de Sélestat, Obernai (CEA, fond cour, gauche RDC)</span></li>
+                <li><span class="key">Code bâtiment</span><span class="val" style="font-family:'JetBrains Mono';color:var(--accent);font-weight:600;">2016</span> <span class="val" style="font-size:0.78rem;color:var(--text-mute);">(refermer portail systématiquement)</span></li>
+                <li><span class="key">Parking</span><span class="val">Parking des Remparts (accréditation à récup au PC)</span></li>
+                <li><span class="key">Identifiant LiveTrail</span><span class="val" style="font-family:'JetBrains Mono';color:var(--accent);">GhilainB</span></li>
+                <li><span class="key">Mot de passe</span><span class="val">commun · via groupe WhatsApp PC</span></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h4>Contacts mission</h4>
+              <ul>
+                <li><span class="key">CDP PC Course</span><span class="val">Mathieu P<br><span style="font-family:'JetBrains Mono';font-size:0.78rem;color:var(--accent);">06 13 89 24 51</span></span></li>
+                <li><span class="key">PC Course (fixe)</span><span class="val" style="font-family:'JetBrains Mono';color:var(--accent);">+33 9 72 16 67 25</span></li>
+                <li><span class="key">Coordination</span><span class="val">Groupe WhatsApp PC interne</span></li>
+                <li><span class="key">Hiérarchie</span><span class="val">RDE (Isabelle V., Clément DS, David LC) en lien permanent</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info-block" style="margin-top:8px;">
+            <h4>Procédures clés</h4>
+            <ul>
+              <li><span class="key">Radio</span><span class="val">« Appelé pour appelant » · confirmer réception · clore par « message terminé »</span></li>
+              <li><span class="key">Traçabilité</span><span class="val">Toutes actions tracées dans LiveTrail (appel coureur, abandon)</span></li>
+              <li><span class="key">Confidentialité</span><span class="val">Ce qui se passe au PC reste au PC</span></li>
+              <li><span class="key">Mission</span><span class="val">Suivi LiveTrail · gestion incidents terrain · veille radio · prédiction passages ravitos</span></li>
+            </ul>
+          </div>
+
+          <div class="logistics">
+            <div class="logistics-title">Plan logistique</div>
+            <ol class="logistics-steps">
+              <li><span class="time">~05:50</span>Réveil Strasbourg</li>
+              <li><span class="time">~06:15</span>Départ Strasbourg → Obernai</li>
+              <li><span class="time">~06:45</span><strong>Arrivée PC 10–15 min avant prise de poste</strong> pour passation de consignes</li>
+              <li><span class="time">07:00</span><strong>Prise de poste</strong> · assistant 2 PC Course</li>
+              <li><span class="time">12:00</span>Fin de mission · restitution accréditation parking</li>
+              <li><span class="time">~12:30</span>Retour Strasbourg</li>
+            </ol>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">SOMMEIL</span>
+            <div class="alert-content">
+              <p>Sommeil utile maxi <strong>~5h</strong> entre M3 (fin 23:15 + retour Strasbourg) et réveil 05:50. <strong>Anticiper café fort + vigilance routière.</strong></p>
+            </div>
+          </div>
+
+          <div class="body-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <h4>Checklist matériel · à cocher avant départ</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m4c1"><label for="m4c1">PC portable + chargeur</label></li>
+                <li><input type="checkbox" id="m4c2"><label for="m4c2">Téléphone + chargeur</label></li>
+                <li><input type="checkbox" id="m4c3"><label for="m4c3">Accréditation bénévole</label></li>
+                <li><input type="checkbox" id="m4c4"><label for="m4c4">Tickets repas</label></li>
+                <li><input type="checkbox" id="m4c5"><label for="m4c5">Code bâtiment 2016 noté</label></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h4>À régler avant la mission</h4>
+              <ul class="checklist">
+                <li><input type="checkbox" id="m4t1"><label for="m4t1">Tester LiveTrail sur PC perso (ident. GhilainB + mdp WhatsApp)</label></li>
+                <li><input type="checkbox" id="m4t2"><label for="m4t2">Vérifier accès groupe WhatsApp PC interne</label></li>
+                <li><input type="checkbox" id="m4t3"><label for="m4t3">Réveil 05:50 programmé</label></li>
+                <li><input type="checkbox" id="m4t4"><label for="m4t4">Café fort prévu</label></li>
+                <li><input type="checkbox" id="m4t5"><label for="m4t5">Récupérer dotations bénévole si pas déjà fait</label></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>Roadbook bénévole · Trail Alsace 2026</div>
+    <div>Mission 5 éventuelle · <span class="accent">slot disponible</span></div>
+  </footer>
+
+</div>
+
+<script>
+// Day tabs
+document.querySelectorAll('.day-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.timeline-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`.timeline-section[data-section="${tab.dataset.day}"]`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Mission expand/collapse
+document.querySelectorAll('.mission-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('expanded');
+  });
+});
+
+// Open first mission of each day by default
+document.querySelectorAll('.timeline-section').forEach(section => {
+  const first = section.querySelector('.mission');
+  if (first) first.classList.add('expanded');
+});
+</script>
+
+</body>
+</html>
