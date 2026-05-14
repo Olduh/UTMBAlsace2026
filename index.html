@@ -817,6 +817,7 @@ body {
   align-items: stretch;
   gap: 10px;
   padding-right: 4px;
+  box-sizing: border-box;
 }
 
 .tl-event .bar {
@@ -830,12 +831,14 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 7px 12px;
+  padding: 6px 12px;
   overflow: hidden;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
+  height: calc(100% - 4px);
+  margin: 2px 0;
 }
 
 .tl-event .e-title {
@@ -882,15 +885,10 @@ body {
 .tl-event.ev-mission .e-title { font-weight: 700; font-size: 0.95rem; }
 .tl-event.ev-mission .e-tag { background: var(--accent); color: var(--bg); }
 
-.tl-event.ev-mission.role-verif .bar { background: var(--day); }
-.tl-event.ev-mission.role-verif .content { border-color: var(--day); background: linear-gradient(90deg, var(--day-bg) 0%, var(--bg-card) 30%); }
-.tl-event.ev-mission.role-verif .e-tag { background: var(--day); color: var(--bg); }
-
-.tl-event.ev-mission.role-ferm .bar { background: var(--night); }
-.tl-event.ev-mission.role-ferm .content { border-color: var(--night); background: linear-gradient(90deg, var(--night-bg) 0%, var(--bg-card) 30%); }
-.tl-event.ev-mission.role-ferm .e-tag { background: var(--night); color: var(--bg); }
-
-.tl-event.ev-mission.role-pc .bar { background: var(--accent); }
+/* Marqueur subtil jour/nuit en complément (filet à gauche du contenu) */
+.tl-event.ev-mission.role-verif .content { box-shadow: inset 6px 0 0 -2px var(--day); }
+.tl-event.ev-mission.role-ferm .content { box-shadow: inset 6px 0 0 -2px var(--night); }
+.tl-event.ev-mission.role-pc .content { box-shadow: inset 6px 0 0 -2px var(--accent); }
 
 .tl-event.ev-travel .bar { background: var(--text-mute); opacity: 0.5; }
 .tl-event.ev-travel .content { background: var(--bg-panel); border-style: dashed; }
@@ -905,6 +903,19 @@ body {
 .tl-event.ev-blocker .bar { background: var(--warn); }
 .tl-event.ev-blocker .content { background: var(--warn-bg); border-color: var(--warn); }
 .tl-event.ev-blocker .e-tag { background: var(--warn); color: var(--bg); }
+
+/* Bloquants résolus : traités comme des trajets (gris discret) */
+.tl-event.ev-resolved .bar { background: var(--text-mute); opacity: 0.5; }
+.tl-event.ev-resolved .content { background: var(--bg-panel); border-color: var(--border); border-style: dashed; }
+.tl-event.ev-resolved .e-title { font-weight: 400; color: var(--text-dim); font-size: 0.82rem; }
+.tl-event.ev-resolved .e-tag { background: var(--bg-elev); color: var(--text-dim); border: 1px solid var(--border); }
+
+.alert-ok {
+  background: var(--ok-bg);
+  border-color: var(--ok);
+  color: var(--text);
+}
+.alert-ok .alert-icon { color: var(--ok); }
 
 /* Événements courts (<30 min) : compact, une seule ligne */
 .tl-event.short .content { padding: 4px 10px; }
@@ -1219,7 +1230,6 @@ body {
       <div class="item"><span class="swatch sw-mission"></span>Mission</div>
       <div class="item"><span class="swatch sw-travel"></span>Trajet / prép</div>
       <div class="item"><span class="swatch sw-rest"></span>Repos / sommeil</div>
-      <div class="item"><span class="swatch sw-blocker"></span>Bloquant à régler</div>
       <div class="item"><span class="swatch sw-night"></span>Nuit (21h → 06h)</div>
     </div>
 
@@ -1506,7 +1516,7 @@ body {
     <div class="tl-day-divider" style="top:calc(0.0px - 14px);"><span class="label">VEN 15 MAI · 06:00</span></div>
     <div class="tl-day-divider" style="top:calc(1440.0px - 14px);"><span class="label">SAM 16 MAI · 00:00</span></div>
     <div class="tl-day-divider" style="top:calc(3360.0px - 14px);"><span class="label">DIM 17 MAI · 00:00</span></div>
-    <div class="tl-event ev-travel" style="top:46.7px;height:53.3px;">
+    <div class="tl-event short ev-travel" style="top:46.7px;height:53.3px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Barr<span class="e-times">06:35 → 07:15 · 40min</span></div>
@@ -1527,7 +1537,7 @@ body {
         <div class="e-sub">100K · Ouvreur · binôme Thierry · 3h30</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:400.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:400.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">À pied</span>Marche/footing Barr → Andlau<span class="e-times">11:00 → 11:30 · 30min</span></div>
@@ -1548,7 +1558,7 @@ body {
         <div class="e-sub">~6h45 · fenêtre récup avant nuit</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:1040.0px;height:53.3px;">
+    <div class="tl-event short ev-travel" style="top:1040.0px;height:53.3px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Barr (avec Meghann)<span class="e-times">19:00 → 19:40 · 40min</span></div>
@@ -1569,17 +1579,17 @@ body {
         <div class="e-sub">100K · Fermeur nuit · trinôme + Meghann + Louis · 4h09</div>
       </div>
     </div>
-    <div class="tl-event ev-blocker" style="top:1464.0px;height:96.0px;">
+    <div class="tl-event ev-resolved" style="top:1464.0px;height:96.0px;">
       <div class="bar"></div>
       <div class="content">
-        <div class="e-title"><span class="e-tag">⚠</span>Descente Sainte-Odile → véhicule<span class="e-times">00:18 → 01:30 · 1h12</span></div>
-        <div class="e-sub">Sans solution validée : retour aléatoire</div>
+        <div class="e-title"><span class="e-tag">✓</span>Descente Sainte-Odile (2e voiture sur place)<span class="e-times">00:18 → 01:30 · 1h12</span></div>
+        <div class="e-sub">Logistique réglée</div>
       </div>
     </div>
     <div class="tl-event ev-travel" style="top:1560.0px;height:60.0px;">
       <div class="bar"></div>
       <div class="content">
-        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg (sous réserve solution)<span class="e-times">01:30 → 02:15 · 45min</span></div>
+        <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg<span class="e-times">01:30 → 02:15 · 45min</span></div>
         <div class="e-sub">~45 min estimé</div>
       </div>
     </div>
@@ -1590,25 +1600,25 @@ body {
         <div class="e-sub">~17h15 · plus grosse fenêtre · prioriser sommeil</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:3000.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:3000.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Obernai (avec Meghann)<span class="e-times">19:30 → 20:00 · 30min</span></div>
         <div class="e-sub">~30 min</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:3040.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:3040.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Prép</span>Récup matériel fermeur au PC Obernai<span class="e-times">20:00 → 20:30 · 30min</span></div>
         <div class="e-sub">53 rue de Sélestat</div>
       </div>
     </div>
-    <div class="tl-event ev-blocker" style="top:3080.0px;height:40.0px;">
+    <div class="tl-event short ev-resolved" style="top:3080.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
-        <div class="e-title"><span class="e-tag">⚠</span>Transfert vers Ottrott (départ M3)<span class="e-times">20:30 → 21:00 · 30min</span></div>
-        <div class="e-sub">1 voiture · solution navette à valider</div>
+        <div class="e-title"><span class="e-tag">✓</span>Transfert Obernai → Ottrott (2e voiture)<span class="e-times">20:30 → 21:00 · 30min</span></div>
+        <div class="e-sub">Logistique réglée</div>
       </div>
     </div>
     <div class="tl-event ev-mission role-ferm" style="top:3120.0px;height:180.0px;">
@@ -1618,7 +1628,7 @@ body {
         <div class="e-sub">20K/RDP · Fermeur nuit · binôme Meghann · 2h15</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:3340.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:3340.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg<span class="e-times">23:45 → 00:15 · 30min</span></div>
@@ -1639,7 +1649,7 @@ body {
         <div class="e-sub">25 min</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:3860.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:3860.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Départ Strasbourg → Obernai<span class="e-times">06:15 → 06:45 · 30min</span></div>
@@ -1660,7 +1670,7 @@ body {
         <div class="e-sub">Sédentaire · suivi LiveTrail · 5h</div>
       </div>
     </div>
-    <div class="tl-event ev-travel" style="top:4320.0px;height:40.0px;">
+    <div class="tl-event short ev-travel" style="top:4320.0px;height:40.0px;">
       <div class="bar"></div>
       <div class="content">
         <div class="e-title"><span class="e-tag">Route</span>Retour Strasbourg · fin week-end<span class="e-times">12:00 → 12:30 · 30min</span></div>
@@ -1669,14 +1679,6 @@ body {
     </div>
       </div>
 
-
-    <div class="continuum-totals">
-      <div class="cell"><div class="l">Durée totale</div><div class="v">55h00</div></div>
-      <div class="cell"><div class="l">Missions</div><div class="v accent">14h54</div></div>
-      <div class="cell"><div class="l">Trajets & prép</div><div class="v">7h14</div></div>
-      <div class="cell"><div class="l">Repos / dispo</div><div class="v rest-c">29h35</div></div>
-      <div class="cell"><div class="l">Bloquants</div><div class="v warn-c">1h42</div></div>
-    </div>
     </div>
   </section>
 
@@ -1803,7 +1805,7 @@ body {
             <div class="info-block">
               <h4>À régler avant la mission</h4>
               <ul class="checklist">
-                <li><input type="checkbox" id="m1t1"><label for="m1t1">Prévenir Thierry · confirmer RDV Barr ~07:15</label></li>
+                <li><input type="checkbox" id="m1t1" checked><label for="m1t1">Prévenir Thierry · confirmer RDV Barr ~07:15 <span style="color:var(--ok);font-family:'JetBrains Mono';font-size:0.7rem;">✓ OK</span></label></li>
                 <li><input type="checkbox" id="m1t2"><label for="m1t2">Récupérer dotations + accréditation + tickets repas (espace bénévoles Obernai)</label></li>
                 <li><input type="checkbox" id="m1t3"><label for="m1t3">Vérifier instructions de pose (rappel : piquets en avant-trou, pas de marteau)</label></li>
               </ul>
@@ -1889,16 +1891,15 @@ body {
               <li><span class="time">~19:50</span>Vérification matériel : radio + tél (chargé) + LiveTrail installé</li>
               <li><span class="time">20:09</span><strong>Top mission</strong> · départ fermeture derrière dernier coureur 100K</li>
               <li><span class="time">00:18</span>Arrivée Ravito Sainte-Odile · transmission codes-barres + puces des abandons</li>
-              <li><span class="time">??:??</span><strong>À résoudre :</strong> redescente depuis Sainte-Odile (voir alerte)</li>
+              <li><span class="time">00:25</span>Récupération 2e voiture laissée à Sainte-Odile</li>
               <li><span class="time">~01:30</span>Retour estimé Strasbourg (sous réserve solution descente)</li>
             </ol>
           </div>
 
-          <div class="alert alert-warn">
-            <span class="alert-icon">BLOQUANT</span>
+          <div class="alert alert-ok">
+            <span class="alert-icon">RÉSOLU</span>
             <div class="alert-content">
-              <p><strong>Problème véhicule à résoudre absolument.</strong> Départ à pied de Barr, fin à Sainte-Odile (~10 km à vol d'oiseau, en altitude). Sans navette, retour très contraint.</p>
-              <p><strong>Options :</strong> voiture laissée en amont à Sainte-Odile (qui fait la navette ?) · co-voiturage avec autre équipe fermeurs · navette organisateur (à demander à Pierre) · récupération par tiers.</p>
+              <p><strong>Logistique véhicule réglée :</strong> 2e voiture déposée à Sainte-Odile en amont. À la fin de M2 (00:18), retour direct vers Strasbourg avec la voiture laissée sur place.</p>
             </div>
           </div>
 
@@ -1956,8 +1957,8 @@ body {
             <div class="info-block">
               <h4>À régler avant la mission</h4>
               <ul class="checklist">
-                <li><input type="checkbox" id="m2t1"><label for="m2t1" style="color:var(--warn);">⚠ Coordonner avec Louis (06 43 42 56 74)</label></li>
-                <li><input type="checkbox" id="m2t2"><label for="m2t2" style="color:var(--warn);">⚠ Valider solution descente Sainte-Odile</label></li>
+                <li><input type="checkbox" id="m2t1" checked><label for="m2t1" style="color:var(--ok);">✓ Coordonné avec Louis (06 43 42 56 74)</label></li>
+                <li><input type="checkbox" id="m2t2" checked><label for="m2t2" style="color:var(--ok);">✓ Descente résolue : 2e voiture laissée à Sainte-Odile</label></li>
                 <li><input type="checkbox" id="m2t3"><label for="m2t3">Confirmer point de récupération matériel fermeur avec Pierre</label></li>
                 <li><input type="checkbox" id="m2t4"><label for="m2t4">Confirmer participation Meghann (mission nocturne en crête)</label></li>
                 <li><input type="checkbox" id="m2t5"><label for="m2t5">Lire procédure abandons (annexe fiche poste)</label></li>
@@ -2041,18 +2042,17 @@ body {
             <ol class="logistics-steps">
               <li><span class="time">~19:30</span>Départ Strasbourg → Obernai</li>
               <li><span class="time">~20:00</span>Récupération matériel fermeur au PC Obernai (53 rue de Sélestat)</li>
-              <li><span class="time">??:??</span><strong>À résoudre :</strong> transfert Ottrott (départ mission)</li>
+              <li><span class="time">~20:30</span>Transfert Obernai → Ottrott avec 2e voiture (1ère laissée à Obernai)</li>
               <li><span class="time">21:00</span><strong>Top mission</strong> · départ fermeture à Ottrott</li>
               <li><span class="time">23:15</span>Arrivée Obernai · transmission abandons · récupération voiture</li>
               <li><span class="time">~00:00</span>Retour Strasbourg</li>
             </ol>
           </div>
 
-          <div class="alert alert-warn">
-            <span class="alert-icon">BLOQUANT</span>
+          <div class="alert alert-ok">
+            <span class="alert-icon">RÉSOLU</span>
             <div class="alert-content">
-              <p><strong>Problème véhicule à résoudre.</strong> 1 voiture, départ Ottrott, arrivée Obernai (~6 km).</p>
-              <p><strong>Options :</strong> navette organisateur Obernai↔Ottrott (très probable — demander à Pierre, c'est le hub) · co-voiturage autre équipe · dépose Ottrott par tiers · vélos.</p>
+              <p><strong>Logistique véhicule réglée :</strong> 2e voiture prise. Une laissée à Obernai (arrivée), l'autre conduit à Ottrott (départ). Retour Obernai → Strasbourg directement à la fin de M3.</p>
             </div>
           </div>
 
@@ -2098,7 +2098,7 @@ body {
             <div class="info-block">
               <h4>À régler avant la mission</h4>
               <ul class="checklist">
-                <li><input type="checkbox" id="m3t1"><label for="m3t1" style="color:var(--warn);">⚠ Valider solution navette Obernai → Ottrott</label></li>
+                <li><input type="checkbox" id="m3t1" checked><label for="m3t1" style="color:var(--ok);">✓ Navette résolue : 2e voiture prise</label></li>
                 <li><input type="checkbox" id="m3t2"><label for="m3t2">Confirmer récupération matériel fermeur (au PC Obernai 20:00 ?)</label></li>
                 <li><input type="checkbox" id="m3t3"><label for="m3t3">Repos samedi journée pris (sommeil prioritaire)</label></li>
                 <li><input type="checkbox" id="m3t4"><label for="m3t4">Recharger frontale + batterie externe entre M2 et M3</label></li>
